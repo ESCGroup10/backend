@@ -1,0 +1,31 @@
+# [START runtime]
+runtime: python
+env: flex
+entrypoint: gunicorn -b :$PORT djangoapi.wsgi
+
+resources:
+  cpu: 2
+  memory_gb: 1.4
+  disk_size_gb: 10
+network:
+  name: default
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 8
+  cool_down_period_sec: 180
+  cpu_utilization:
+    target_utilization: 0.5
+  target_concurrent_requests: 100
+
+handlers:
+- url: /static
+  static_dir: static
+- url: .*
+  script: djangoapi.wsgi.application
+
+beta_settings:
+    cloud_sql_instances: esc10-303807:asia-southeast1:escdb
+
+runtime_config:
+  python_version: 3
+# [END runtime]
