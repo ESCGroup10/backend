@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'innhc*u5g5e!(e!gpl@51=zxdo!gk+q#y#ypfkimg6u&$voinp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '10.0.2.2', 'esc10-303807.et.r.appspot.com']
 
 
 # Application definition
@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
-    'rest_framework'
+    'rest_framework',
+    'djangoapi',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +82,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': '1234',
+        'PORT': '5432',
         #'HOST': 'localhost',
     }
 }
@@ -89,7 +91,8 @@ DATABASES['default']['HOST'] = '/cloudsql/esc10-303807:asia-southeast1:escdb'
 if os.getenv('GAE_INSTANCE'):
     pass
 else:
-    DATABASES['default']['HOST'] = '127.0.0.1'
+    #DATABASES['default']['HOST'] = '127.0.0.1'
+    DATABASES['default']['HOST'] = '35.247.162.71'
 
 
 # Password validation
@@ -134,4 +137,3 @@ PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 STATIC_URL = 'https://storage.googleapis.com/esc-images/static/'
-
