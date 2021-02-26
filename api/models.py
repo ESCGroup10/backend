@@ -35,3 +35,16 @@ class News(models.Model):
     title = models.CharField(max_length=100)
     details = models.TextField()
     news_date = models.DateTimeField(default=datetime.now)
+
+
+class User(models.Model):
+    name = models.CharField(max_length=30)
+    company = models.CharField(max_length=30, default="Null")
+    email = models.EmailField(max_length=50)
+    location = models.CharField(max_length=200)
+    institution = models.CharField(max_length=30, default="Null")
+    type = models.CharField(max_length=30)
+
+class Auth(models.Model):
+    username = models.CharField(max_length=30)
+    password = models.CharField(max_length=30)

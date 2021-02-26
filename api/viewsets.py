@@ -13,3 +13,11 @@ class PreviewReportViewSet(viewsets.ModelViewSet):
 class NewsViewSet(viewsets.ModelViewSet):
     queryset = models.News.objects.all()
     serializer_class = serializers.NewsSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer
+
+class AuthViewSet(viewsets.ModelViewSet):
+    queryset = models.Auth.objects.all()
+    serializer_class = serializers.AuthSerializer

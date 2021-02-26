@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Report, News
+from .models import *
 
 class ReportSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,4 +15,14 @@ class PreviewReportSeriazlier(serializers.ModelSerializer):
 class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = News
+        fields = '__all__'
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+class AuthSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Auth
         fields = '__all__'
