@@ -12,32 +12,6 @@ from .managers import UserManager
 
 # Create your models here.
 
-class Report(models.Model):
-
-    # basic info
-    auditor_id = models.IntegerField(default=0)
-    tenant_id = models.IntegerField(default=0)
-    location = models.CharField(max_length=100, blank=True)
-    outlet_type = models.CharField(max_length=100)
-    status = models.BooleanField(default=False)
-
-    # report details
-    report_notes = models.CharField(max_length=500, blank=True)
-    report_date = models.DateTimeField(default=datetime.now)
-    report_image = models.CharField(max_length=200, blank=True)
-
-    # resolution details
-    resolution_notes = models.CharField(max_length=500, blank=True)
-    resolution_date = models.CharField(max_length=100, blank=True)
-    resolution_image = models.CharField(max_length=200, blank=True)
-
-    # scores
-    staffhygiene_score = models.IntegerField(default=0)
-    housekeeping_score = models.IntegerField(default=0)
-    safety_score = models.IntegerField(default=0)
-    healthierchoice_score = models.IntegerField(default=0)
-    foodhygiene_score = models.IntegerField(default=0)
-
 class User(AbstractUser):
 
     # Additional fields
@@ -66,9 +40,29 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
 
+class Report(models.Model):
 
-# class News(models.Model):
-#     auditor_id = models.CharField(max_length=30)
-#     title = models.CharField(max_length=100)
-#     details = models.TextField()
-#     news_date = models.DateTimeField(default=datetime.now)
+    # basic info
+    auditor_id = models.IntegerField(default=0)
+    tenant_id = models.IntegerField(default=0)
+    company = models.CharField(max_length=30)
+    location = models.CharField(max_length=100, blank=True)
+    outlet_type = models.CharField(max_length=100)
+    status = models.BooleanField(default=False)
+
+    # report details
+    report_notes = models.CharField(max_length=500, blank=True)
+    report_date = models.DateTimeField(default=datetime.now)
+    report_image = models.CharField(max_length=200, blank=True)
+
+    # resolution details
+    resolution_notes = models.CharField(max_length=500, blank=True)
+    resolution_date = models.CharField(max_length=100, blank=True)
+    resolution_image = models.CharField(max_length=200, blank=True)
+
+    # scores
+    staffhygiene_score = models.IntegerField(default=0)
+    housekeeping_score = models.IntegerField(default=0)
+    safety_score = models.IntegerField(default=0)
+    healthierchoice_score = models.IntegerField(default=0)
+    foodhygiene_score = models.IntegerField(default=0)
