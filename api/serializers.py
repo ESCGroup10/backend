@@ -10,7 +10,7 @@ class ReportSerializer(serializers.ModelSerializer):
 class PreviewReportSeriazlier(serializers.ModelSerializer):
     class Meta:
         model = Report
-        fields = ['id', 'stall', 'status', 'report_date', 'resolution_date']
+        fields = ['id', 'tenant_id', 'status', 'report_date', 'resolution_date']
 
 # class NewsSerializer(serializers.ModelSerializer):
 #     class Meta:
@@ -20,9 +20,22 @@ class PreviewReportSeriazlier(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['email', 'password', 'id', 'name', 'company', 'location', 'institution', 'type']
 
-# class AuthSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Auth
-#         fields = '__all__'
+    def save(self, commit=True):
+
+        # Save the provided password in hashed format
+        user = User(
+            email = self.validated_data['email'],     
+            name = self.validated_data['name'],
+            company = self.validated_data['company'],
+            location = self.validated_data['location'],
+            institution = self.validated_data['institution'],
+            type = self.validated_data['type']
+        ) 
+        user.set_password(self.validated_data["password"])
+        user.is_active = True
+        user.is_staff = True
+        user.is_admin = True
+        user.save()
+        return user

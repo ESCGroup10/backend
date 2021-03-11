@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'innhc*u5g5e!(e!gpl@51=zxdo!gk+q#y#ypfkimg6u&$voinp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', '10.0.2.2', 'esc10-303807.et.r.appspot.com']
 
@@ -41,7 +41,19 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'djangoapi',
+    'rest_framework.authtoken',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+],
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated',],
+}
+
+AUTH_USER_MODEL = 'api.User'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

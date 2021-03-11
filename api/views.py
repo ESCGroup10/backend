@@ -4,6 +4,9 @@ from . import models
 from rest_framework import mixins, viewsets
 from django.db.models import Q
 from rest_framework.generics import RetrieveAPIView
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 # Create your views here.
 class TenantViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -24,7 +27,6 @@ class SingleUserViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             queryset = queryset.filter(email=email)
         return queryset
 
-
 class LatestReportViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = ReportSerializer
     http_method_names = ['get']
@@ -37,4 +39,3 @@ class LatestReportViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             queryset = queryset.filter(tenant_id=tenant_id).order_by('-report_date')[:1]
 
         return queryset
-        

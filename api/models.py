@@ -1,5 +1,14 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import AbstractUser
+from django.utils.translation import ugettext_lazy as _
+
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+from .managers import UserManager
 
 # Create your models here.
 
@@ -29,20 +38,37 @@ class Report(models.Model):
     healthierchoice_score = models.IntegerField(default=0)
     foodhygiene_score = models.IntegerField(default=0)
 
+class User(AbstractUser):
+
+    # Additional fields
+    name = models.CharField(max_length=30)
+    company = models.CharField(max_length=30, blank="True")
+    location = models.CharField(max_length=200, blank="True")
+    institution = models.CharField(max_length=30, blank="True")
+    type = models.CharField(max_length=30)
+
+
+    # Necessary fields for custom user model
+    username = None
+    email = models.EmailField(_('email address'), unique=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = UserManager()
+
+    def __str__(self):
+        return self.email
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+
+
 # class News(models.Model):
 #     auditor_id = models.CharField(max_length=30)
 #     title = models.CharField(max_length=100)
 #     details = models.TextField()
 #     news_date = models.DateTimeField(default=datetime.now)
-
-class User(models.Model):
-    name = models.CharField(max_length=30)
-    company = models.CharField(max_length=30, blank="True")
-    email = models.EmailField(max_length=50)
-    location = models.CharField(max_length=200, blank="True")
-    institution = models.CharField(max_length=30, blank="True")
-    type = models.CharField(max_length=30)
-
-# class Auth(models.Model):
-#     username = models.CharField(max_length=30)
-#     password = models.CharField(max_length=30)

@@ -12,10 +12,7 @@ router.register('latestReport', LatestReportViewSet, basename='latestReport')
 # users
 router.register('users', UserViewSet)
 router.register('singleUser', SingleUserViewSet, basename='singleUser')
-
-# authentication
 router.register('tenants', TenantViewSet, basename='tenants')
-# router.register('auth', AuthViewSet)
 
 # news
 #router.register('news', NewsViewSet)
