@@ -9,6 +9,9 @@ router.register('report', ReportViewSet)
 router.register('previewReport', PreviewReportViewSet)
 router.register('latestReport', LatestReportViewSet, basename='latestReport')
 
+# cases
+router.register('case', CaseViewSet)
+
 # users
 router.register('users', UserViewSet)
 router.register('singleUser', SingleUserViewSet, basename='singleUser')

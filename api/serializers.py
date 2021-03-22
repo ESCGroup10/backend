@@ -12,6 +12,11 @@ class PreviewReportSeriazlier(serializers.ModelSerializer):
         model = Report
         fields = ['id', 'tenant_id', 'status', 'report_date', 'resolution_date']
 
+class CaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Case
+        fields = '__all__'
+
 # class NewsSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = News

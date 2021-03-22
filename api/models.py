@@ -61,8 +61,19 @@ class Report(models.Model):
     resolution_image = models.CharField(max_length=200, blank=True)
 
     # scores
-    staffhygiene_score = models.IntegerField(default=0)
-    housekeeping_score = models.IntegerField(default=0)
-    safety_score = models.IntegerField(default=0)
-    healthierchoice_score = models.IntegerField(default=0)
-    foodhygiene_score = models.IntegerField(default=0)
+    staffhygiene_score = models.DecimalField(default=0, decimal_places=2, max_digits=10)
+    housekeeping_score = models.DecimalField(default=0, decimal_places=2, max_digits=10)
+    safety_score = models.DecimalField(default=0, decimal_places=2, max_digits=10)
+    healthierchoice_score = models.DecimalField(default=0, decimal_places=2, max_digits=10)
+    foodhygiene_score = models.DecimalField(default=0, decimal_places=2, max_digits=10)
+
+class Case(models.Model):
+
+    report_id = models.IntegerField()
+    question = models.CharField(max_length=200)
+    unresolved_photo = models.CharField(max_length=100)
+    unresolved_photo = models.TextField()
+    resolved_photo = models.CharField(max_length=100)
+    resolved_comments = models.TextField()
+    check = models.CharField(max_length=3)
+    status = models.BooleanField(null=True)

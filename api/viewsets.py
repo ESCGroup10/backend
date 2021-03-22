@@ -10,6 +10,10 @@ class PreviewReportViewSet(viewsets.ModelViewSet):
     queryset = models.Report.objects.all()
     serializer_class = serializers.PreviewReportSeriazlier
 
+class CaseViewSet(viewsets.ModelViewSet):
+    queryset = models.Case.objects.all()
+    serializer_class = serializers.CaseSerializer
+
 # class NewsViewSet(viewsets.ModelViewSet):
 #     queryset = models.News.objects.all()
 #     serializer_class = serializers.NewsSerializer
