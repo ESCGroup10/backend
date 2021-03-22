@@ -21,7 +21,6 @@ class User(AbstractUser):
     institution = models.CharField(max_length=30, blank="True")
     type = models.CharField(max_length=30)
 
-
     # Necessary fields for custom user model
     username = None
     email = models.EmailField(_('email address'), unique=True)
@@ -75,5 +74,4 @@ class Case(models.Model):
     unresolved_photo = models.TextField()
     resolved_photo = models.CharField(max_length=100)
     resolved_comments = models.TextField()
-    check = models.CharField(max_length=3)
-    status = models.BooleanField(null=True)
+    is_resolved = models.BooleanField(null=True)
