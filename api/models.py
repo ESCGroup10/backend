@@ -71,9 +71,14 @@ class Case(models.Model):
 
     report_id = models.IntegerField()
     question = models.CharField(max_length=200)
-    unresolved_photo = models.CharField(max_length=100)
-    unresolved_photo = models.TextField()
-    resolved_photo = models.CharField(max_length=100)
-    resolved_comments = models.TextField()
-    check = models.CharField(max_length=3)
-    status = models.BooleanField(null=True)
+
+    is_resolved = models.BooleanField(null=True)
+    non_compliance_type = models.CharField(max_length=100, choices=(('Professional & Staff Hygiene', 'Professional & Staff Hygiene'), ('Housekeeping & General Cleanliness', 'Housekeeping & General Cleanliness'), ('Workplace Safety & Health', 'Workplace Safety & Health'), ('Healthier Choice', 'Healthier Choice'), ('Food Hygiene', 'Food Hygiene')))
+
+    unresolved_photo = models.CharField(max_length=100, blank=True)
+    unresolved_comments = models.TextField(blank=True)
+    unresolved_date = models.DateTimeField(blank=True)
+
+    resolved_photo = models.CharField(max_length=100, blank=True)
+    resolved_comments = models.TextField(blank=True)
+    resolved_date = models.DateTimeField(null=True)

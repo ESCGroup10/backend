@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import UserSerializer, ReportSerializer
+from .serializers import UserSerializer, ReportSerializer, CaseSerializer
 from . import models
 from rest_framework import mixins, viewsets
 from django.db.models import Q
@@ -9,11 +9,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 # Create your views here.
+
 class TenantViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = UserSerializer
-    
+
     def get_queryset(self):
-        return models.User.objects.filter(Q(type='F&B')|Q(type='Non F&B'))
+        return models.User.objects.filter(Q(type='F&B') | Q(type='Non F&B'))
+
 
 class SingleUserViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = UserSerializer
@@ -27,6 +29,28 @@ class SingleUserViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             queryset = queryset.filter(email=email)
         return queryset
 
+
+class FilterCaseViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = CaseSerializer
+    http_method_names = ['get']
+
+    def get_queryset(self):
+        queryset = models.Case.objects.all()
+        
+        report_id = self.request.query_params.get('report_id', None)
+        case_id = self.request.query_params.get('id', None)
+        is_resolved = self.request.query_params.get('is_resolved', None)
+
+        if report_id is not None:
+            queryset = queryset.filter(report_id=report_id)
+        if case_id is not None:
+            queryset = queryset.filter(id=case_id)
+        if is_resolved is not None:
+            queryset = queryset.filter(is_resolved=is_resolved)
+
+        return queryset
+
+
 class LatestReportViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = ReportSerializer
     http_method_names = ['get']
@@ -36,6 +60,7 @@ class LatestReportViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         tenant_id = self.request.query_params.get('tenant_id', None)
 
         if tenant_id is not None:
-            queryset = queryset.filter(tenant_id=tenant_id).order_by('-report_date')[:1]
+            queryset = queryset.filter(
+                tenant_id=tenant_id).order_by('-report_date')[:1]
 
         return queryset

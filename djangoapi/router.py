@@ -1,5 +1,5 @@
 from api.viewsets import *
-from api.views import TenantViewSet, SingleUserViewSet, LatestReportViewSet
+from api.views import TenantViewSet, SingleUserViewSet, LatestReportViewSet, FilterCaseViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -11,6 +11,7 @@ router.register('latestReport', LatestReportViewSet, basename='latestReport')
 
 # cases
 router.register('case', CaseViewSet)
+router.register('filterCases', FilterCaseViewSet, basename='filterCase')
 
 # users
 router.register('users', UserViewSet)

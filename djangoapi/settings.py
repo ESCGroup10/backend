@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'innhc*u5g5e!(e!gpl@51=zxdo!gk+q#y#ypfkimg6u&$voinp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '10.0.2.2', 'esc10-303807.et.r.appspot.com']
 
