@@ -21,7 +21,6 @@ class User(AbstractUser):
     institution = models.CharField(max_length=30, blank="True")
     type = models.CharField(max_length=30)
 
-
     # Necessary fields for custom user model
     username = None
     email = models.EmailField(_('email address'), unique=True)
