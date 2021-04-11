@@ -8,6 +8,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
+
 from .managers import UserManager
 
 # Create your models here.
@@ -45,6 +46,7 @@ class Report(models.Model):
     auditor_id = models.IntegerField(default=0)
     tenant_id = models.IntegerField(default=0)
     company = models.CharField(max_length=30)
+    institution = models.CharField(max_length=30)
     location = models.CharField(max_length=100, blank=True)
     outlet_type = models.CharField(max_length=100)
     status = models.BooleanField(default=False)
@@ -52,12 +54,9 @@ class Report(models.Model):
     # report details
     report_notes = models.CharField(max_length=500, blank=True)
     report_date = models.DateTimeField(default=datetime.now)
-    report_image = models.CharField(max_length=200, blank=True)
 
     # resolution details
-    resolution_notes = models.CharField(max_length=500, blank=True)
     resolution_date = models.CharField(max_length=100, blank=True)
-    resolution_image = models.CharField(max_length=200, blank=True)
 
     # scores
     staffhygiene_score = models.DecimalField(default=0, decimal_places=2, max_digits=10)
@@ -69,6 +68,7 @@ class Report(models.Model):
 class Case(models.Model):
 
     report_id = models.IntegerField()
+    tenant_id = models.IntegerField()
     question = models.CharField(max_length=200)
 
     is_resolved = models.BooleanField(null=True)
@@ -76,8 +76,22 @@ class Case(models.Model):
 
     unresolved_photo = models.CharField(max_length=100, blank=True)
     unresolved_comments = models.TextField(blank=True)
-    unresolved_date = models.DateTimeField(blank=True)
+    unresolved_date = models.DateTimeField(null=True)
 
     resolved_photo = models.CharField(max_length=100, blank=True)
     resolved_comments = models.TextField(blank=True)
     resolved_date = models.DateTimeField(null=True)
+
+    rejected_comments = models.CharField(max_length=100, blank=True)
+
+class ReportedCase(models.Model):
+    tenant_id = models.IntegerField(default=0)
+    month = models.DateTimeField()
+    count = models.IntegerField(blank=True, null=True)
+
+class ResolvedCase(models.Model):
+    tenant_id = models.IntegerField(default=0)
+    month = models.DateTimeField()
+    count = models.IntegerField(blank=True, null=True)
+
+

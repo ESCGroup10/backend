@@ -17,6 +17,21 @@ class CaseSerializer(serializers.ModelSerializer):
         model = Case
         fields = '__all__'
 
+# class CaseStatsSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = CaseStats
+#         fields = '__all__'
+
+class ReportedCaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReportedCase
+        fields = ('tenant_id', 'month', 'count')
+
+class ResolvedCaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResolvedCase
+        fields = ('tenant_id','month', 'count')
+
 # class NewsSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = News
