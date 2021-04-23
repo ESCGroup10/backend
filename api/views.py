@@ -28,9 +28,14 @@ class SingleUserViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     def get_queryset(self):
         queryset = models.User.objects.all()
         email = self.request.query_params.get('email', None)
+        userid = self.request.query_params.get('id', None)
 
         if email is not None:
             queryset = queryset.filter(email=email)
+
+        if userid is not None:
+            queryset = queryset.filter(id=userid)
+            
         return queryset
 
 
@@ -104,10 +109,10 @@ class ResolvedCaseView(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = ResolvedCaseSerializer
 
     def get_queryset(self):
-        queryset = models.Case.objects.annotate(month=TruncMonth('unresolved_date')).values('tenant_id', 'month').annotate(count=Count('id')).values('tenant_id', 'month', 'count').order_by('-month')
+        queryset = models.Case.objects.annotate(month=TruncMonth('resolved_date')).values('tenant_id', 'month').annotate(count=Count('id')).values('tenant_id', 'month', 'count').order_by('-month')
         tenant_id = self.request.query_params.get('tenant_id', None)
 
         if tenant_id is not None:
             queryset = queryset.filter(tenant_id=tenant_id)
 
-        return queryset
+        return queryset.exclude(month=None)
